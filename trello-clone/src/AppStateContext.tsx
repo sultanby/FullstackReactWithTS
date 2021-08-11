@@ -2,7 +2,6 @@ import React, { createContext, useReducer, useContext } from "react"
 import { nanoid } from "nanoid"
 import { findItemIndexById, overrideItemAtIndex, moveItem, removeItemAtIndex, insertItemAtIndex } from "./utils/arrayUtils"
 import { DragItem } from "./DragItem"
-import { formatDiagnostic } from "typescript"
 
 interface Task {
     id: string
