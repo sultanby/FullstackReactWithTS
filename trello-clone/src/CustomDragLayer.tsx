@@ -26,6 +26,7 @@ const CustomDragLayer: React.FC = () => {
         currentOffset: monitor.getSourceClientOffset(),
         isDragging: monitor.isDragging()
     }))
+    
 
     if (!isDragging) {
         return null
