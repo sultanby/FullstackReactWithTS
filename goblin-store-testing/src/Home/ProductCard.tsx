@@ -1,20 +1,27 @@
 import React from "react"
-import { useCart } from "../CartContext"
+import { useCartContext } from "../CartContext"
 import { Product } from "../shared/types"
 
-interface ProductProps {
-  datum: Product;
+export interface ProductCardProps {
+  datum: Product
+  useCartHook?: () => Pick<
+    ReturnType<typeof useCartContext>,
+    "products" | "addToCart"
+  >
 }
 
-export const ProductCard = ({ datum }: ProductProps) => {
-  const { addToCart, products } = useCart()
+export const ProductCard = ({
+  datum,
+  useCartHook = useCartContext
+}: ProductCardProps) => {
+  const { addToCart, products } = useCartHook()
 
-  const isInCart = !!products?.find((product) => datum.name === product.name)
+  const isInCart = !!products?.find(
+    (product) => datum.name === product.name
+  )
 
   return (
-    <div
-      className="nes-container is-rounded item"
-    >
+    <div className="nes-container is-rounded item">
       <img
         style={{ imageRendering: "pixelated" }}
         src={datum.image}
@@ -25,13 +32,18 @@ export const ProductCard = ({ datum }: ProductProps) => {
       <p>{datum.name}</p>
       <p>{datum.price} Zm</p>
       {isInCart ? (
-        <button className="nes-btn is-disabled">Added to cart</button>
+        <button disabled className="nes-btn is-disabled">
+          Added to cart
+        </button>
       ) : (
-        <button className="nes-btn is-primary"
-      onClick={() => {
-        addToCart(datum)
-      }}
-         >Add to cart</button>
+        <button
+          className="nes-btn is-primary"
+          onClick={() => {
+            addToCart(datum)
+          }}
+        >
+          Add to cart
+        </button>
       )}
     </div>
   )

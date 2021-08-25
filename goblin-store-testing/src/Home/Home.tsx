@@ -3,12 +3,10 @@ import { ProductCard } from "./ProductCard"
 import { useProducts } from "./useProducts"
 import { Category } from "../shared/types"
 
-interface HomeProps {
-  useProductsHook?: () => {
-    categories: Category[]
-    isLoading: boolean
-    error: boolean
-  }
+interface HomeProps { useProductsHook?: () => Pick<
+    ReturnType<typeof useProducts>, 
+    "categories" | "isLoading" | "error"
+  >
 }
 
 export const Home = ({ useProductsHook = useProducts }: HomeProps) => {
@@ -29,7 +27,7 @@ export const Home = ({ useProductsHook = useProducts }: HomeProps) => {
           <section key={category.name} className="nes-container with-title showcase">
             <h2 className="title">{category.name}</h2>
             <section className="items">
-              {category.items.map((item) => {
+              {category.items.map((item: any) => {
                 return <ProductCard key={item.name} datum={item} />
               })}
             </section>
