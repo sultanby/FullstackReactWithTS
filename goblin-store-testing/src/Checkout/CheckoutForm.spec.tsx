@@ -1,18 +1,65 @@
 import React from "react"
+import { render, fireEvent } from "@testing-library/react"
+import { CheckoutForm } from "./CheckoutForm"
+import { act } from "react-dom/test-utils"
 
 describe("CheckoutForm", () => {
-  it.todo("renders correctly")
+  afterAll(jest.clearAllMocks)
+  it("renders correctly", () => {
+    const { container } = render(<CheckoutForm />)
 
-  describe("with validation errors", () => {
-    it.todo("renders error messages")
-    it.todo("disables submit button")
+    expect(container.innerHTML).toMatch("Cardholder's Name")
+    expect(container.innerHTML).toMatch("Card Number")
+    expect(container.innerHTML).toMatch("Expiration Date")
+    expect(container.innerHTML).toMatch("CVV")
   })
 
-  describe("without validation errors", () => {
+  describe("with invalid inputs", () => {
+    it("shows errors ", async () => {
+      const { container, getByText } = render(<CheckoutForm />)
+
+      await act(async () => {
+        fireEvent.click(getByText("Place order"))
+      })
+
+      expect(container.innerHTML).toMatch("error")
+    })
+  })
+
+  describe("with valid inputs", () => {
     describe("on place order button click", () => {
-      it.todo("calls submit function with form data")
-      it.todo("clears cart")
-      it.todo("redirects to order summary page")
+      it("calls submit function with form data", async () => {
+        const mockSubmit = jest.fn()
+
+        const { getByLabelText, getByText } = render(
+          <CheckoutForm submit={mockSubmit} />
+        )
+
+        await act(async () => {
+          fireEvent.change(
+            getByLabelText("Cardholder's Name:"), 
+            { target: { value: "Johnny Smith" } 
+          })
+          fireEvent.change(
+            getByLabelText("Card Number:"), 
+            { target: { value: "0000 0000 0000 0000" }
+          })
+          fireEvent.change(
+            getByLabelText("Expiration Date:"),
+            { target: { value: "3020-05" } }
+          )
+          fireEvent.change(
+            getByLabelText("CVV:"), 
+            { target: { value: "123" }
+          })
+        })
+
+        await act(async () => {
+          fireEvent.click(getByText("Place order"))
+        })
+
+        expect(mockSubmit).toHaveBeenCalled()
+      })
     })
   })
 })
