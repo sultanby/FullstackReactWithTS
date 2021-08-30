@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import * as yup from "yup"
 
 interface CheckoutFormProps {
-  submit?: (data: CheckoutPayload) => Promise<{ orderId: string | undefined, success?: boolean }>
+  submit?: () => Promise<void>
 }
 
 const validationSchema = yup.object().shape({
@@ -26,24 +26,15 @@ const validationSchema = yup.object().shape({
 })
 
 export const CheckoutForm = ({
-  submit = submitCheckout,
+  submit = async () => {},
 }: CheckoutFormProps) => {
-  const { clearCart, products } = useCartContext()
   const { register, errors, handleSubmit } = useForm({
     mode: "onBlur",
     validationSchema,
   })
 
-  const onSubmit = handleSubmit(async (data) => {
-    const { orderId } = await submit({
-      products 
-    })
-    clearCart()
-    window.location.assign(`/order/?orderId=${orderId}`)
-  })
-
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit(submit)}>
       <FormField
         placeholder="John Smith"
         type="text"

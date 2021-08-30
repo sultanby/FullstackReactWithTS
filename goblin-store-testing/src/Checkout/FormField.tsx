@@ -21,6 +21,7 @@ export const FormField = React.forwardRef(
         <input
           ref={ref}
           name={name}
+          id={name}
           {...inputProps}
           className={`nes-input ${errors && "is-error"}`}
           onChange={(e) => (e.target.value = normalize(e.target.value))}
