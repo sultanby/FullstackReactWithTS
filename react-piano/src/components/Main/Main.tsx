@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from "react"
-import { Keyboard } from "../Keyboard/Keyboard"
+import { KeyboardWithInstrument } from "../Keyboard/WithInstrument" 
 import { NoAudioMessage } from "../NoAudioMessage/NoAudioMessage" 
 import { useAudioContext } from "../AudioContextProvider/useAudioContext"
 
 export const Main: FunctionComponent = () => {
-    const AudioContext = useAudioContext()
-    return !!AudioContext ? <Keyboard /> : <NoAudioMessage />
+    const AudioContext = useAudioContext() 
+    return !!AudioContext ? (
+        <KeyboardWithInstrument />) : (
+            <NoAudioMessage />
+        )
 }
-
-export default Main;
