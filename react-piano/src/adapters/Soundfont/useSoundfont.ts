@@ -1,3 +1,4 @@
+/*
 import { useRef, useState } from "react";
 import Soundfont, { InstrumentName, Player } from "soundfont-player";
 import { MidiValue } from "../../domain/note";
@@ -69,3 +70,5 @@ export function useSoundfont({AudioContext}: Settings): Adapted {
         stop
     }
 }
+*/
+export {}
