@@ -4,7 +4,7 @@ import { useAudioContext } from "../AudioContextProvider/useAudioContext"
 import { Keyboard } from "../Keyboard/Keyboard"
 import "./style.css"
 import { useInstrument } from "../../state/Instrument/Context"
-import { SoundfontProvider } from "../../adapters/Soundfont/SoundfontProvider"
+import { SoundfontProvider } from "../../adapters/Soundfont/SoundfontProviderClass"
 
 
 export const KeyboardWithInstrument: FunctionComponent = () => {
