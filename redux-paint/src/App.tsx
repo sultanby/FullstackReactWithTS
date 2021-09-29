@@ -1,9 +1,13 @@
-import React, { useEffect, useRef } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { beginStroke, endStroke, updateStroke } from "./actions"
-import { clearCanvas, drawStroke, setCanvasSize } from "./canvasUtils"
+import React, { useRef, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "./type"
+import { drawStroke, clearCanvas, setCanvasSize } from "./canvasUtils"
+import { EditPanel } from "./EditPanel"
 import { ColorPanel } from "./ColorPanel"
-import { currentStrokeSelector } from './selector'
+import { currentStrokeSelector } from "./modules/currentStroke/selectors"
+import { strokesSelector } from "./modules/strokes/selectors"
+import { historyIndexSelector } from "./modules/historyIndex/selectors"
+import { beginStroke, updateStroke, endStroke } from "./modules/currentStroke/actions"
 
 const WIDTH = 1024
 const HEIGHT = 768
@@ -11,8 +15,18 @@ const HEIGHT = 768
 function App() {
   const dispatch = useDispatch()
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const currentStroke = useSelector(currentStrokeSelector)
-  const isDrawing = !!currentStroke.points.length
+  const currentStroke = useSelector<RootState, RootState["currentStroke"]>(
+    currentStrokeSelector
+  )
+  const historyIndex = useSelector<RootState, RootState["historyIndex"]>(
+    (state) => state.historyIndex
+  )
+  const strokes = useSelector<RootState, RootState["strokes"]>(
+    (state: RootState) => state.strokes
+  )
+  const isDrawing = useSelector<RootState>(
+    (state) => !!state.currentStroke.points.length
+  )
   const getCanvasWithContext = (canvas = canvasRef.current) => {
     return { canvas, context: canvas?.getContext("2d") }
   }
@@ -35,7 +49,7 @@ function App() {
 
   const endDrawing = () => { 
     if (isDrawing) {
-      dispatch(endStroke())
+      dispatch(endStroke(historyIndex, currentStroke))
     }
   }
 
@@ -63,6 +77,20 @@ function App() {
     clearCanvas(canvas)
   }, [])
 
+  useEffect(() => {
+    const { canvas, context } = getCanvasWithContext()
+    if (!context || !canvas) {
+      return
+    }
+    requestAnimationFrame(() =>{
+      clearCanvas(canvas)
+
+      strokes.slice(0, strokes.length - historyIndex).forEach((stroke) => {
+        drawStroke(context, stroke.points, stroke.color)
+      })
+    })
+  })
+
   return (
     <div className="window">
       <div className="title-bar">
@@ -71,6 +99,7 @@ function App() {
           <button aria-label="Close" />
         </div>
       </div>
+      <EditPanel />
       <ColorPanel />
       <canvas
         onMouseDown={startDrawing}

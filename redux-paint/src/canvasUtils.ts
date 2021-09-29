@@ -38,3 +38,4 @@ export const setCanvasSize = (
     canvas.style.height = `${height}px`
     canvas.getContext("2d")?.scale(2, 2)
 }
+
