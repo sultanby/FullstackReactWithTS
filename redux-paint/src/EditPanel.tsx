@@ -8,7 +8,7 @@ export const EditPanel = () => {
     const undoLimit = useSelector(strokesLengthSelector)
     
     return (
-        <div className="window-edit">
+        <div className="window edit">
             <div className="title-bar">
                 <div className="title-bar-text">Edit</div>
             </div>

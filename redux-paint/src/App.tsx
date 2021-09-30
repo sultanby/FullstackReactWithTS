@@ -1,31 +1,32 @@
-import React, { useRef, useEffect } from "react"
+import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "./type"
 import { drawStroke, clearCanvas, setCanvasSize } from "./canvasUtils"
 import { EditPanel } from "./EditPanel"
 import { ColorPanel } from "./ColorPanel"
 import { currentStrokeSelector } from "./modules/currentStroke/selectors"
-import { strokesSelector } from "./modules/strokes/selectors"
-import { historyIndexSelector } from "./modules/historyIndex/selectors"
 import { beginStroke, updateStroke, endStroke } from "./modules/currentStroke/actions"
+import { historyIndexSelector } from "./modules/historyIndex/selectors"
+import { useCanvas } from "./CanvasContext"
+import { FilePanel } from "./shared/FilePanel"
 
 const WIDTH = 1024
 const HEIGHT = 768
 
 function App() {
   const dispatch = useDispatch()
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const currentStroke = useSelector<RootState, RootState["currentStroke"]>(
-    currentStrokeSelector
+  const canvasRef = useCanvas()
+  const isDrawing = useSelector<RootState>(
+    (state) => !!state.currentStroke.points.length
   )
   const historyIndex = useSelector<RootState, RootState["historyIndex"]>(
-    (state) => state.historyIndex
+    historyIndexSelector
   )
   const strokes = useSelector<RootState, RootState["strokes"]>(
     (state: RootState) => state.strokes
   )
-  const isDrawing = useSelector<RootState>(
-    (state) => !!state.currentStroke.points.length
+  const currentStroke = useSelector<RootState, RootState["currentStroke"]>(
+    currentStrokeSelector
   )
   const getCanvasWithContext = (canvas = canvasRef.current) => {
     return { canvas, context: canvas?.getContext("2d") }
@@ -89,7 +90,7 @@ function App() {
         drawStroke(context, stroke.points, stroke.color)
       })
     })
-  })
+  }, [historyIndex])
 
   return (
     <div className="window">
@@ -101,6 +102,7 @@ function App() {
       </div>
       <EditPanel />
       <ColorPanel />
+      <FilePanel />
       <canvas
         onMouseDown={startDrawing}
         onMouseUp={endDrawing}
