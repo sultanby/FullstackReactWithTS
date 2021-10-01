@@ -9,6 +9,7 @@ import { beginStroke, updateStroke, endStroke } from "./modules/currentStroke/ac
 import { historyIndexSelector } from "./modules/historyIndex/selectors"
 import { useCanvas } from "./CanvasContext"
 import { FilePanel } from "./shared/FilePanel"
+import { strokesSelector } from "./modules/strokes/selectors"
 
 const WIDTH = 1024
 const HEIGHT = 768
@@ -23,7 +24,7 @@ function App() {
     historyIndexSelector
   )
   const strokes = useSelector<RootState, RootState["strokes"]>(
-    (state: RootState) => state.strokes
+    strokesSelector
   )
   const currentStroke = useSelector<RootState, RootState["currentStroke"]>(
     currentStrokeSelector
@@ -34,7 +35,7 @@ function App() {
 
   const startDrawing = ({ nativeEvent }: React.MouseEvent<HTMLCanvasElement>) => {
     const { offsetX, offsetY } = nativeEvent 
-    dispatch(beginStroke(offsetX, offsetY))
+    dispatch(beginStroke({x: offsetX, y: offsetY}))
   }
 
   useEffect(() =>{
@@ -47,10 +48,9 @@ function App() {
     )
   }, [currentStroke])
   
-
   const endDrawing = () => { 
     if (isDrawing) {
-      dispatch(endStroke(historyIndex, currentStroke))
+      dispatch(endStroke({historyIndex, stroke: currentStroke}))
     }
   }
 
@@ -59,7 +59,7 @@ function App() {
       return
     }
     const { offsetX, offsetY } = nativeEvent
-    dispatch(updateStroke(offsetX, offsetY))
+    dispatch(updateStroke({x: offsetX, y: offsetY}))
   }
 
   useEffect(() => {
