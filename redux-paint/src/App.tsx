@@ -1,15 +1,15 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "./type"
+import { EditPanel } from "./shared/EditPanel"
 import { drawStroke, clearCanvas, setCanvasSize } from "./canvasUtils"
-import { EditPanel } from "./EditPanel"
-import { ColorPanel } from "./ColorPanel"
-import { currentStrokeSelector } from "./modules/currentStroke/selectors"
-import { beginStroke, updateStroke, endStroke } from "./modules/currentStroke/actions"
-import { historyIndexSelector } from "./modules/historyIndex/selectors"
+import { beginStroke, updateStroke } from "./modules/currentStroke/slice"
+import { endStroke } from "./modules/sharedActions"
 import { useCanvas } from "./CanvasContext"
+import { ColorPanel } from "./shared/ColorPanel"
 import { FilePanel } from "./shared/FilePanel"
+import { currentStrokeSelector } from "./modules/currentStroke/selectors"
 import { strokesSelector } from "./modules/strokes/selectors"
+import { historyIndexSelector } from "./modules/historyIndex/selectors"
 
 const WIDTH = 1024
 const HEIGHT = 768
@@ -17,18 +17,11 @@ const HEIGHT = 768
 function App() {
   const dispatch = useDispatch()
   const canvasRef = useCanvas()
-  const isDrawing = useSelector<RootState>(
-    (state) => !!state.currentStroke.points.length
-  )
-  const historyIndex = useSelector<RootState, RootState["historyIndex"]>(
-    historyIndexSelector
-  )
-  const strokes = useSelector<RootState, RootState["strokes"]>(
-    strokesSelector
-  )
-  const currentStroke = useSelector<RootState, RootState["currentStroke"]>(
-    currentStrokeSelector
-  )
+  const historyIndex = useSelector(historyIndexSelector)
+  const strokes = useSelector(strokesSelector)
+  const currentStroke = useSelector(currentStrokeSelector)
+  const isDrawing = !!currentStroke.points.length
+  
   const getCanvasWithContext = (canvas = canvasRef.current) => {
     return { canvas, context: canvas?.getContext("2d") }
   }
@@ -48,9 +41,25 @@ function App() {
     )
   }, [currentStroke])
   
+  useEffect(() => {
+    const { canvas, context } = getCanvasWithContext()
+    if (!context || !canvas) {
+      return
+    }
+    requestAnimationFrame(() => {
+      clearCanvas(canvas)
+
+      strokes
+        .slice(0, strokes.length - historyIndex)
+        .forEach((stroke) => {
+          drawStroke(context, stroke.points, stroke.color)
+        })
+    })
+  }, [historyIndex, strokes])
+  
   const endDrawing = () => { 
     if (isDrawing) {
-      dispatch(endStroke({historyIndex, stroke: currentStroke}))
+      dispatch(endStroke({ stroke: currentStroke, historyIndex }))
     }
   }
 
@@ -77,20 +86,6 @@ function App() {
 
     clearCanvas(canvas)
   }, [])
-
-  useEffect(() => {
-    const { canvas, context } = getCanvasWithContext()
-    if (!context || !canvas) {
-      return
-    }
-    requestAnimationFrame(() =>{
-      clearCanvas(canvas)
-
-      strokes.slice(0, strokes.length - historyIndex).forEach((stroke) => {
-        drawStroke(context, stroke.points, stroke.color)
-      })
-    })
-  }, [historyIndex])
 
   return (
     <div className="window">

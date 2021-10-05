@@ -1,9 +1,11 @@
-import { configureStore, getDefaultMiddleware, Action } from "@reduxjs/toolkit"
-import { reducer as historyIndex } from './modules/historyIndex/reducer' 
-import { reducer as currentStroke } from './modules/currentStroke/reducer' 
-import { reducer as strokes } from './modules/strokes/reducer'
-import logger from 'redux-logger'
-import { RootState } from "./type"
+import {
+    configureStore,
+    getDefaultMiddleware,
+} from "@reduxjs/toolkit"
+import { currentStroke } from './modules/currentStroke/slice'
+import historyIndex from './modules/historyIndex/slice'
+import strokes from './modules/strokes/slice'
+import logger from "redux-logger"
 
 const middleware = [...getDefaultMiddleware(), logger]
 
@@ -12,5 +14,5 @@ export const store = configureStore({
         historyIndex,
         currentStroke,
         strokes,
-    }, middleware 
+    }, middleware
 })

@@ -5,12 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import { store } from './store';
+import { CanvasProvider } from './CanvasContext';
 
 ReactDOM.render(
-  <React.StrictMode> 
+  <React.StrictMode>
     <Provider store={store}>
-    <App />
-  </Provider>
+      <CanvasProvider>
+        <App />
+      </CanvasProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
 
