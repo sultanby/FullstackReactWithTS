@@ -10,6 +10,8 @@ import { FilePanel } from "./shared/FilePanel"
 import { currentStrokeSelector } from "./modules/currentStroke/selectors"
 import { strokesSelector } from "./modules/strokes/selectors"
 import { historyIndexSelector } from "./modules/historyIndex/selectors"
+import { RootState } from "./type"
+import { ModalLayer } from "./ModalLayer"
 
 const WIDTH = 1024
 const HEIGHT = 768
@@ -17,9 +19,9 @@ const HEIGHT = 768
 function App() {
   const dispatch = useDispatch()
   const canvasRef = useCanvas()
-  const historyIndex = useSelector(historyIndexSelector)
-  const strokes = useSelector(strokesSelector)
-  const currentStroke = useSelector(currentStrokeSelector)
+  const historyIndex = useSelector<RootState, RootState["historyIndex"]>(historyIndexSelector)
+  const strokes = useSelector<RootState, RootState["strokes"]>(strokesSelector)
+  const currentStroke = useSelector<RootState, RootState["currentStroke"]>(currentStrokeSelector)
   const isDrawing = !!currentStroke.points.length
   
   const getCanvasWithContext = (canvas = canvasRef.current) => {
@@ -98,6 +100,7 @@ function App() {
       <EditPanel />
       <ColorPanel />
       <FilePanel />
+      <ModalLayer />
       <canvas
         onMouseDown={startDrawing}
         onMouseUp={endDrawing}

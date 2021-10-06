@@ -1,9 +1,13 @@
 import React from "react"
-import { useCanvas } from "../CanvasContext" 
-import { saveAs } from "file-saver"
+import { useDispatch } from "react-redux"
+import { useCanvas } from "../CanvasContext"
 import { getCanvasImage } from "../canvasUtils"
+import { show } from "../modules/modals/slice"
+import { saveAs } from "file-saver"
 
 export const FilePanel = () => {
+    const dispatch = useDispatch()
+
     const canvasRef = useCanvas()
 
     const exportToFile = async () => {
@@ -23,6 +27,21 @@ export const FilePanel = () => {
                 <div className="field-row">
                     <button className="save-button" onClick={exportToFile}>
                         Export
+                    </button>
+                    <button
+                        className="save-button"
+                        onClick={() => {
+                            dispatch(show("PROJECTS_SAVE_MODAL"))
+                        }}>
+                        Save
+                    </button>
+                    <button
+                        className="save-button"
+                        onClick={() => {
+                            dispatch(show("PROJECTS_MODAL"))
+                        }}
+                    >
+                        Load
                     </button>
                 </div>
             </div>
