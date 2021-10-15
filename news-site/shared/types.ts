@@ -4,6 +4,9 @@ export type EntityId = number | UniqueString
 export type Category = "Technology" | "Science" | "Arts" 
 export type DateIsoString = string
 
+export type Person = string 
+export type RelativeTime = string
+
 export interface Post { 
     id: EntityId
     date: DateIsoString 
@@ -15,3 +18,10 @@ export interface Post {
     source: UriString
 }
     
+export interface Comment {
+    id: EntityId 
+    author: Person 
+    content: string 
+    time: RelativeTime 
+    post: EntityId
+}
