@@ -6,6 +6,7 @@ export type DateIsoString = string
 
 export type Person = string 
 export type RelativeTime = string
+export type Optional<TEntity> = TEntity | null
 
 export interface Post { 
     id: EntityId

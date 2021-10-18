@@ -15,7 +15,7 @@ export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({
             <Link href="/">
                 <a>Front</a> 
             </Link>
-            <span>￿</span>
+            <span>▸</span>
             <Link href="/category/[id]" as={`/category/${post.category}`}>
                 <a>{post.category}</a> 
             </Link>

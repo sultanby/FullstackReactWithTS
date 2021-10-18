@@ -1,8 +1,8 @@
-import  React from 'react';
+import  React from 'react'
 import Head from "next/head"
-import { Feed } from '../components/Feed';
-import { Category, Post } from '../shared/types';
-import { fetchCategories, fetchPosts } from '../api/summary';
+import { Feed } from '../components/Feed'
+import { Category, Post } from '../shared/types'
+import { fetchCategories, fetchPosts } from '../api/summary'
 
 interface FrontProps { 
     posts: Post[],

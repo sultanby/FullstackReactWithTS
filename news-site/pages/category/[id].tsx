@@ -5,7 +5,7 @@ import { Post } from "../../shared/types"
 import { fetchPosts } from "../../api/category"
 import { Section } from "../../components/Section"
 import { Loader } from "../../components/Loader"
-import { categoryPaths as paths } from "../../shared/staticPaths"
+import { categoryPaths } from "../../shared/staticPaths"
 
 interface CategoryProps {
   posts: Post[]
@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps<CategoryProps> = async ({
 }
 
 export async function getStaticPaths() {
-  return { paths, fallback: true }
+  return { paths: categoryPaths, fallback: true }
 }
 
 const Category: FunctionComponent<CategoryProps> = ({ posts }) => {

@@ -1,7 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
-  "/_error": "pages/_error.js",
-  "/category/[id]": "pages/category/[id].js",
-  "/post/[id]": "pages/post/[id].js"
-}
+{"/404":"static/development/pages/404.js","/_app":"static/development/pages/_app.js","/_document":"static/development/pages/_document.js","/_error":"static/development/pages/_error.js","/index":"static/development/pages/index.js","/post/[id]":"static/development/pages/post/[id].js","/":"static/development/pages/index.js"}

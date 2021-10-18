@@ -10,7 +10,11 @@ interface SectionProps {
   isCompact?: boolean
 }
 
-export const Section: FunctionComponent<SectionProps> = ({ title, posts, isCompact = false }) => {
+export const Section: FunctionComponent<SectionProps> = ({ 
+  title, 
+  posts, 
+  isCompact = false 
+}) => {
   return (
     <section>
       <Title>{title}</Title>
