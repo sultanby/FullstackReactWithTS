@@ -5,30 +5,33 @@ import * as dotenv from "dotenv"
 import { App } from "./App"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { MemoryRouter } from "react-router"
+import { ClientProvider } from "./auth/ClientProvider"
 
 dotenv.config()
 
 const screen = blessed.screen({
-    autoPadding: true,
-    smartCSR: true,
-    sendFocus: true,
-    title: "Github Manager",
-    cursor: {
-        color: "black", 
-        shape: "underline", 
-        artificial: true, 
-        blink: true
-    }
+  autoPadding: true,
+  smartCSR: true,
+  sendFocus: true,
+  title: "Github Manager",
+  cursor: {
+    color: "black",
+    shape: "underline",
+    artificial: true,
+    blink: true
+  }
 })
 
 screen.key(["q", "C-c"], () => process.exit(0))
 
 const component = render(
-    <ErrorBoundary>
-      <MemoryRouter>
+  <ErrorBoundary>
+    <MemoryRouter>
+      <ClientProvider>
         <App />
-      </MemoryRouter>
+      </ClientProvider>
+    </MemoryRouter>
   </ErrorBoundary>,
-  screen 
+  screen
 )
 
