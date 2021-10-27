@@ -2,7 +2,6 @@ import React from "react"
 import { gql } from "apollo-boost"
 import { useQuery } from "react-apollo-hooks"
 import { getUserInfo } from "./types/getUserInfo"
-import { Panel } from "./Panel"
 
 const GET_USER_INFO = gql`
   query getUserInfo {
@@ -25,7 +24,34 @@ export const WelcomeWindow = () => {
   }
 
   return (
-    <Panel height={10} top="25%" left="center">
+    <blessed-box
+      draggable
+      focused
+      width="50%"
+      height="50%"
+      left="25%"
+      top="25%"
+      mouse
+      shadow
+      border={{
+        type: "line"
+      }}
+      keys
+      align="center"
+      style={{
+        bg: "white",
+        shadow: true,
+        border: {
+          bg: "white",
+          fg: "black"
+        },
+        label: {
+          bg: "white",
+          fg: "black"
+        }
+      }}
+      vi
+    >
       <blessed-text
         left="center"
         bg="white"
@@ -45,6 +71,6 @@ export const WelcomeWindow = () => {
         content={`Bio: ${data?.viewer.bio}`}
       />
 
-    </Panel>
+    </blessed-box>
   )
 }

@@ -8,6 +8,5 @@ export const App = () => {
         }}
         >
             <WelcomeWindow />
-        </blessed-box>
-    )
+        </blessed-box>)
 }
