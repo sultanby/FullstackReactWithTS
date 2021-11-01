@@ -27,8 +27,8 @@ export const ClientProvider: FC<PropsWithChildren<{}>> = ({
         getToken()
     }, [])
 
-    if (!token) {
-        return <>Loading...</>
+    if (token) {
+        return <>Bearer ${token}</>
     }
 
     const client = new ApolloClient({
