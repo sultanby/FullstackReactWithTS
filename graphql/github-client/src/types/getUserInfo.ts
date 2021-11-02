@@ -8,20 +8,20 @@
 // ====================================================
 
 export interface getUserInfo_viewer {
-    __typename: "User";
-    /**
-     * The user's public profile name.
-     */
-    name: string | null;
-    /**
-     * The user's public profile bio.
-     */
-    bio: string | null;
+  __typename: "User";
+  /**
+   * The user's public profile name.
+   */
+  name: string | null;
+  /**
+   * The user's public profile bio.
+   */
+  bio: string | null;
 }
 
 export interface getUserInfo {
-    /**
-     * The currently authenticated user.
-     */
-    viewer: getUserInfo_viewer;
+  /**
+   * The currently authenticated user.
+   */
+  viewer: getUserInfo_viewer;
 }
