@@ -2,6 +2,7 @@ import React from "react"
 import { WelcomeWindow } from "./WelcomeWindow"
 import { Switch, Route, useHistory } from "react-router"
 import { Repositories } from "./Repositories"
+import { Issues } from "./Issues"
 
 export const App = () => {
     const history = useHistory()
@@ -18,6 +19,10 @@ export const App = () => {
             Quit: {
               keys: "q"
             },
+            Issues: {
+              keys: "i",
+              callback: () => history.push("/issues")
+            },
             Repositories: {
               keys: "r",
               callback: () => history.push("/repositories")
@@ -31,6 +36,7 @@ export const App = () => {
         <Switch>
           <Route exact path="/" component={WelcomeWindow} />
           <Route path="/repositories" component={Repositories} />
+          <Route path="/issues" component={Issues} />
         </Switch>
       </blessed-box>
     )
