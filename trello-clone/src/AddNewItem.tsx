@@ -15,9 +15,9 @@ export const AddNewItem = (props: AddNewItemProps) => {
         // We show item creation form here
         return (
             <NewItemForm
-                onAdd={text => {
-                    onAdd(text)
-                    setShowForm(false)
+                onAdd={(text) => {
+                    onAdd(text);
+                    setShowForm(false);
                 }
                 }
             />)

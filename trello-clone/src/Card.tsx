@@ -1,53 +1,57 @@
-import React from "react"
-import { useRef } from "react"
-import { useDrop } from "react-dnd"
-import { useAppState } from "./AppStateContext"
-import { CardDragItem } from "./DragItem"
-import { CardContainer } from "./styles"
-import { useItemDrag } from "./useItemDrag"
-import { isHidden } from "./utils/isHidden"
+import { useRef } from "react";
+import { useItemDrag } from "./utils/useItemDrag";
+import { useDrop } from "react-dnd";
+import { useAppState } from "./state/AppStateContext";
+import { isHidden } from "./utils/isHidden";
+import { moveTask, setDraggedItem } from "./state/actions";
+import { throttle } from "throttle-debounce-ts";
+import { CardContainer } from "./styles";
 
-interface CardProps {
-  text: string
-  index: number
-  id: string
-  columnId: string
-  isPreview?: boolean
-}
+type CardProps = {
+  text: string;
+  id: string;
+  columnId: string;
+  isPreview?: boolean;
+};
 
-export const Card = ({ text, id, index, columnId, isPreview }: CardProps) => {
-  const { state, dispatch } = useAppState()
-  const { drag } = useItemDrag({ type: "CARD", id, index, text, columnId })
-  const ref = useRef<HTMLDivElement>(null)
+export const Card = ({ text, id, columnId, isPreview }: CardProps) => {
+  const { draggedItem, dispatch } = useAppState();
+  const ref = useRef<HTMLDivElement>(null);
+
+  const { drag } = useItemDrag({
+    type: "CARD",
+    id,
+    text,
+    columnId,
+  });
+
   const [, drop] = useDrop({
     accept: "CARD",
-    hover(item: CardDragItem) {
-      if (item.id === id) {
-        return
+    hover: throttle(200, () => {
+      if (!draggedItem) {
+        return;
+      }
+      if (draggedItem.type !== "CARD") {
+        return;
+      }
+      if (draggedItem.id === id) {
+        return;
       }
 
-      const dragIndex = item.index
-      const hoverIndex = index
-      const sourceColumn = item.columnId
-      const targetColumn = columnId
+      dispatch(moveTask(draggedItem.id, id, draggedItem.columnId, columnId));
+      dispatch(setDraggedItem({ ...draggedItem, columnId }));
+    }),
+  });
 
-      dispatch({
-        type: "MOVE_TASK",
-        payload: { dragIndex, hoverIndex, sourceColumn, targetColumn }
-      })
-      item.index = hoverIndex
-      item.columnId = targetColumn
-    }
-  })
+  drag(drop(ref));
 
-  drag(drop(ref))
-
-
-  return <CardContainer
-    isHidden={isHidden(isPreview, state.draggedItem, "CARD", id)}
-    isPreview={isPreview}
-    ref={ref}
-  >
-    {text}
-  </CardContainer>
-}
+  return (
+    <CardContainer
+      isHidden={isHidden(draggedItem, "CARD", id, isPreview)}
+      isPreview={isPreview}
+      ref={ref}
+    >
+      {text}
+    </CardContainer>
+  );
+};

@@ -1,25 +1,23 @@
-import React from "react"
-import { Column } from "./Column"
-import { AppContainer } from "./styles"
-import { useAppState } from "./AppStateContext"
-import { AddNewItem } from "./AddNewItem"
-import CustomDragLayer from "./CustomDragLayer"
+import { AddNewItem } from "./AddNewItem";
+import { Column } from "./Column";
+import { useAppState } from "./state/AppStateContext";
+import { addList } from "./state/actions";
+import { CustomDragLayer } from "./CustomDragLayer";
+import { AppContainer } from "./styles";
 
-function App() {
-  const {state, dispatch} = useAppState()
+export const App = () => {
+  const { lists, dispatch } = useAppState();
 
   return (
     <AppContainer>
       <CustomDragLayer />
-      {state.lists.map((list, i) =>(
-        <Column id={list.id} text={list.text} key={list.id} index={i} />
+      {lists.map((list) => (
+        <Column text={list.text} key={list.id} id={list.id} />
       ))}
-      <AddNewItem 
-        toggleButtonText="+ Add another list" 
-        onAdd={(text) => dispatch({type: "ADD_LIST", payload: text})} 
+      <AddNewItem
+        toggleButtonText="+ Add another list"
+        onAdd={(text) => dispatch(addList(text))}
       />
     </AppContainer>
-  ); 
-}
-
-export default App
+  );
+};

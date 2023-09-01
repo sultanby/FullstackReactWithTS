@@ -1,57 +1,29 @@
-import React from "react"
-import { XYCoord, useDragLayer } from "react-dnd"
-import { Column } from "./Column"
-import { CustomDragLayerContainer } from "./styles"
-import { Card } from "./Card"
+import { useDragLayer } from "react-dnd";
+import { useAppState } from "./state/AppStateContext";
+import { Column } from "./Column";
+import { Card } from "./Card";
+import { CustomDragLayerContainer, DragPreviewWrapper } from "./styles";
 
-function getItemStyles(currentOffset: XYCoord | null): React.CSSProperties {
-    if (!currentOffset) {
-        return {
-            display: "none"
-        }
-    }
+export const CustomDragLayer = () => {
+  const { draggedItem } = useAppState();
+  const { currentOffset } = useDragLayer((monitor) => ({
+    currentOffset: monitor.getSourceClientOffset(),
+  }));
 
-    const { x, y } = currentOffset
-
-    const transform = `translate(${x}px, ${y}px)`
-    return {
-        transform,
-        WebkitTransform: transform
-    }
-}
-
-const CustomDragLayer: React.FC = () => {
-    const { isDragging, item, currentOffset } = useDragLayer(monitor => ({
-        item: monitor.getItem(),
-        currentOffset: monitor.getSourceClientOffset(),
-        isDragging: monitor.isDragging()
-    }))
-    
-
-    if (!isDragging) {
-        return null
-    }
-
-    return (
-        <CustomDragLayerContainer>
-            <div style={getItemStyles(currentOffset)}>
-                {item.type === "COLUMN" ? (
-                    <Column
-                    id={item.id}
-                    text={item.text}
-                    index={item.index}
-                    isPreview={true} />
-                ) : (
-                    <Card 
-                    columnId={item.columnId}
-                    isPreview={true}
-                    index={0}
-                    id={item.id}
-                    text={item.text} />
-                )}
-            </div>
-        </CustomDragLayerContainer>
-    )
-}
-
-export default CustomDragLayer
+  return draggedItem && currentOffset ? (
+    <CustomDragLayerContainer>
+      <DragPreviewWrapper position={currentOffset}>
+        {draggedItem.type === "COLUMN" ? (
+          <Column id={draggedItem.id} text={draggedItem.text} isPreview />
+        ) : (
+          <Card
+            columnId={draggedItem.columnId}
+            isPreview
+            id={draggedItem.id}
+            text={draggedItem.text}
+          />
+        )}
+      </DragPreviewWrapper>
+    </CustomDragLayerContainer>
+  ) : null;
+};

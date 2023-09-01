@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+# Trello Clone App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Trello Clone App](public/trello-clone.png)
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
 
-### `npm start`
+## Introduction
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The Trello Clone App is a full-stack application that provides a simplified version of a Kanban board, similar to popular tools like Trello. It allows users to create boards, add tasks, and organize them into columns, providing an efficient way to manage projects and tasks.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Create boards:** Users can create multiple boards to organize different projects or tasks.
+- **Add and manage tasks:** Users can add, edit, and delete tasks on their boards.
+- **Organize tasks into columns:** Users can create custom columns on their boards and move tasks between columns.
+- **Drag-and-drop functionality:** Tasks can be moved within and between columns using drag-and-drop.
+- **User-friendly interface:** The app features an intuitive and responsive user interface for easy task management.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
 
-### `npm run build`
+- **Frontend:** HTML, CSS, JavaScript, React.js
+- **Backend:** Node.js, Express.js
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository: `git clone https://github.com/sultanby/FullstackReactWithTS.git`
+2. Navigate to the project directory: `cd treello-clone`
+3. Install frontend dependencies: `cd backend && npm install`
+4. Install backend dependencies: `cd .. && npm install`
+5. Start the server: `npm start` in the `trello-clone/backend` directory.
+6. Start the frontend: `npm start` in the `trello-clone` directory.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `npm run eject`
+1. Create a new board for your project or task list.
+2. Add tasks to your board and organize them into columns.
+3. Use drag-and-drop to move tasks within and between columns.
+4. Edit or delete tasks as needed.
+5. Stay organized and manage your projects efficiently!
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Contributing
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or create a pull request.
