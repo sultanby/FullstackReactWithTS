@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+# Virtual Piano Keyboard with Instrument Selection
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Virtual Piano Keyboard](public/flute.png)
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-### `npm start`
+## Introduction
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The Virtual Piano Keyboard with Instrument Selection is a web application that allows users to play musical notes using a virtual piano keyboard. Users can select from a list of instruments to create different sounds while playing the keyboard. The application utilizes a third-party API to generate musical notes and leverages the browser's built-in AudioContext API to access the user's sound hardware.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Virtual Piano Keyboard:** Users can play musical notes by pressing corresponding keys on their computer keyboard, triggering virtual piano keys.
+- **Instrument Selection:** Users can choose from a list of instruments to change the sound produced by the virtual piano.
+- **Real-time Sound:** The application uses the AudioContext API to provide real-time audio feedback to users when they press keys.
+- **Responsive Design:** The user interface is designed to work seamlessly on both desktop and mobile devices.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
 
-### `npm run build`
+- **Frontend:** HTML, CSS, JavaScript, React.js
+- **API Integration:** Third-party musical notes API
+- **Audio Processing:** Web Audio API
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository: `git clone https://github.com/sultanby/FullstackReactWithTS.git`
+2. Navigate to the project directory: `cd react-piano`
+3. Install dependencies: `npm install`
+6. Start the frontend: `npm start` in the `react-piano` directory.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Open the application in your web browser.
+2. Use your computer keyboard to play musical notes on the virtual piano keyboard.
+3. Select different instruments from the list to change the sound.
+4. Enjoy creating music and experimenting with different instrument sounds!
